@@ -1,6 +1,8 @@
 from django.db import models
 from .utils import code_generator, create_shortcode
 from django.conf import settings
+from .validators import validate_dot_com, validate_url
+from django_hosts.resolvers import reverse
 # Create your models here.
 
 SHORTCODE_MAX = getattr(settings, "SHORTCODE_MAX", 15)
@@ -24,7 +26,7 @@ class KirrURLManager(models.Manager):
         return "New Codes  made {i}".format(i=new_codes)
 
 class KirrURL(models.Model):
-    url = models.CharField(max_length=220)
+    url = models.CharField(max_length=220, validators=[validate_dot_com, validate_url])
     shortcode = models.CharField(max_length=SHORTCODE_MAX,unique=True,blank=True)
     updated = models.DateTimeField(auto_now=True)
     timestamp = models.DateTimeField(auto_now_add=True)
@@ -32,10 +34,21 @@ class KirrURL(models.Model):
 
     objects = KirrURLManager()
 
-    def __str__(self):
-        return str(self.url)
 
     def save(self, *args, **kwargs):
         if(self.shortcode is None or self.shortcode == ""):
             self.shortcode = create_shortcode(self)
+
+        if not "http" in self.url:
+            self.url = "http://" + self.url
         super(KirrURL,self).save(*args, **kwargs)
+
+    def __str__(self):
+        return str(self.url)
+
+    def __unicode__(self):
+        return str(self.url)
+
+    def get_short_url(self):
+        url_path = reverse("scode", kwargs={"shortcode":self.shortcode}, host="www", scheme="http")
+        return url_path

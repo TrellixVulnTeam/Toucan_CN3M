@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     #Custom Apps
     'shortener',
+    'analytics',
     #Third Party Apps
     'django_hosts'
 ]
@@ -59,11 +60,13 @@ ROOT_URLCONF = 'kirr.urls'
 ROOT_HOSTCONF = 'kirr.hosts'
 DEFAULT_HOST = 'www'
 DEFAULT_REDIRECT_URL = "http://www.tirr.com:8000"
+PARENT_HOST = 'tirr.com:8000'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

@@ -1,0 +1,45 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <link href="http://getbootstrap.com/examples/cover/cover.css" rel="stylesheet">
+        <title>{% block title %}Mantis | URL Shortener{% endblock title %}</title>
+        <style>
+
+            body{
+                background-image: url("http://cdn.wallpapersafari.com/95/99/rhQGxH.png");
+                background-repeat: no-repeat;
+                background-size: cover;
+            }
+        </style>
+
+
+    </head>
+    <body>
+    <div class="site-wrapper">
+
+      <div class="site-wrapper-inner">
+
+        <div class="cover-container">
+
+          <div class="inner cover">
+
+              {% block content %}
+
+              {% endblock content %}
+
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+    </body>
+
+
+
+</html>
